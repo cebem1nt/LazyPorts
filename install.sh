@@ -45,11 +45,13 @@ if command -v go >/dev/null 2>&1; then
              echo -e "${BLUE}[INFO] $GOBIN is not in your PATH.${NC}"
              
              SHELL_CONFIG=""
-             if [ -f "$HOME/.bashrc" ]; then
-                 SHELL_CONFIG="$HOME/.bashrc"
-             elif [ -f "$HOME/.zshrc" ]; then
-                 SHELL_CONFIG="$HOME/.zshrc"
-             fi
+             SHELL_CONFIGS=("$HOME/.bashrc" "$HOME/.zshrc" "$ZDOTDIR/.zshrc")
+
+             for CFG in "${SHELL_CONFIGS[@]}"; do
+                 if [ -f "$CFG" ]; then
+                     SHELL_CONFIG="$CFG"
+                 fi
+             done 
 
              if [ -n "$SHELL_CONFIG" ]; then
                  echo -e "${BLUE}[+] detected $SHELL_CONFIG. Appending to PATH...${NC}"
