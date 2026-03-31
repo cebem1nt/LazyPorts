@@ -177,6 +177,7 @@ func (m model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			tableHeight = 2
 		}
 		m.table.SetHeight(tableHeight)
+		m.updateTableColumns()
 
 	case []PortEntry:
 		m.entries = msg
@@ -229,13 +230,16 @@ func (m *model) sortEntries() {
 }
 
 func (m *model) updateTableColumns() {
+	usedWidth := (8 + 6 + 12 + 8 + 20) + 14
+	remainingWidth := m.width - usedWidth
+
 	columns := []table.Column{
 		{Title: "Port", Width: 8},
 		{Title: "Proto", Width: 6},
 		{Title: "State", Width: 12},
 		{Title: "PID", Width: 8},
 		{Title: "Address", Width: 20},
-		{Title: "Process", Width: 20}, // Flexible
+		{Title: "Process", Width: remainingWidth}, // Flexible
 	}
 
 	// Add arrow indicator
