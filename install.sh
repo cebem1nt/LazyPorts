@@ -50,6 +50,7 @@ if command -v go >/dev/null 2>&1; then
              for CFG in "${SHELL_CONFIGS[@]}"; do
                  if [ -f "$CFG" ]; then
                      SHELL_CONFIG="$CFG"
+                     break
                  fi
              done 
 
